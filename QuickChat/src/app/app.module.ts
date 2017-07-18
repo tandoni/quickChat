@@ -40,6 +40,7 @@ import {
 import { MainComponent } from './+main/main.component';
 import { SignInComponent } from './+sign-in/sign-in.component';
 import { MyPostsComponent } from './+my-posts/my-posts.component';
+import { AuthService } from "app/services/auth.service";
 
 
 export const MaterialModules = [
@@ -86,7 +87,9 @@ export const MaterialModules = [
     BrowserAnimationsModule,
     FlexLayoutModule,
   ],
-  providers: [],
+  providers: [
+    AuthService,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
