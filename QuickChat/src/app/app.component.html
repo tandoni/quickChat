@@ -24,6 +24,8 @@
     <button *ngIf="authService.isSignedInStream | async" md-icon-button (click)="sidenav.toggle()">
       <md-icon>menu</md-icon>
     </button> Quick Chat
+    <span fxFlex></span>
+    {{authService.displayNameStream | async}}
   </md-toolbar>
   <router-outlet></router-outlet>
 
