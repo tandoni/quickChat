@@ -31,9 +31,12 @@ export class PostComponent implements OnInit {
     }
   }
 
-  enableEditing() {
+  enableEditing(inputEl: HTMLInputElement) {
     this.editingMode = EditMode.editing;
     this.updatedPostBody = this.postWithAuthor.body;
+    setTimeout(() => {
+      inputEl.focus();
+    }, 0);
   }
 
   remove() {
