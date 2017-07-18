@@ -66,4 +66,9 @@ export class PostService {
   remove(key: string) {
     firebase.database().ref().child(this.postsPath).child(key).remove();
   }
+
+  udpate(key: string, post: Post) {
+    // firebase.database().ref().child(this.postsPath).child(key).set(post);
+    this.db.object(`/${this.postsPath}/${key}`).update(post);
+  }
 }
