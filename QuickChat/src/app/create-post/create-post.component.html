@@ -1,5 +1,5 @@
 <md-card fxLayout>
-  <img *ngIf="authService.photoUrlStream | async;else noPhotoTemplate" [src]="authService.photoUrlStream | async" alt="Google profile photo">
+  <img *ngIf="(authService.photoUrlStream | async) as picture;else noPhotoTemplate" [src]="picture" alt="Google profile photo">
   <ng-template #noPhotoTemplate>
     <img src="/assets/images/missing_photo.png" alt="Missing photo">
   </ng-template>

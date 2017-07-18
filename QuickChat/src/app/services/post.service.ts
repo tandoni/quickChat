@@ -5,13 +5,17 @@ import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/databa
 @Injectable()
 export class PostService {
   readonly postsPath = 'posts';
-  private _postStream: FirebaseListObservable<Post[]>
+  private _postsStream: FirebaseListObservable<Post[]>
 
   constructor(private db: AngularFireDatabase) {
-    this._postStream = this.db.list(this.postsPath);
+    this._postsStream = this.db.list(this.postsPath);
    }
 
   add(post: Post) {
-    this._postStream.push(post);
+    this._postsStream.push(post);
+  }
+
+  get postsStream(): FirebaseListObservable<Post[]> {
+    return this._postsStream;
   }
 }
