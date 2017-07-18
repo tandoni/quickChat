@@ -14,7 +14,9 @@ import * as firebase from 'firebase/app';
 @Injectable()
 export class PostService {
   readonly postsPath = 'posts';
-  readonly postBatchSize = 4;
+  readonly postBatchSize = 20;
+
+  public hideLoadMoreBtn = false;
 
   postsWithAuthorStream: Observable<PostWithAuthor[]>
 
@@ -40,8 +42,10 @@ export class PostService {
     this.postsWithAuthorStream = Observable.combineLatest<PostWithAuthor[]>(
       postsStream,
       this.authorService.authorMapStream,
-      (posts: Post[], authorMap: Map<string, Author>) => {
+      numPostsStream,
+      (posts: Post[], authorMap: Map<string, Author>, numPostsRequested: number) => {
         const postsWithAuthor: PostWithAuthor[] = [];
+        this.hideLoadMoreBtn = numPostsRequested > posts.length;
         for (let post of posts) {
           const postWithAuthor = new PostWithAuthor(post);
           postWithAuthor.author = authorMap[post.authorKey];
