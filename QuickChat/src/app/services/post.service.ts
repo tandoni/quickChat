@@ -62,4 +62,8 @@ export class PostService {
   displayMorePosts() {
     this.postIncrementStream.next(this.postBatchSize);
   }
+
+  remove(key: string) {
+    firebase.database().ref().child(this.postsPath).child(key).remove();
+  }
 }

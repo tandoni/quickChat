@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Post, PostWithAuthor } from "models/post";
 import { AuthService } from "app/services/auth.service";
+import { PostService } from "app/services/post.service";
 
 enum EditMode {
   notEditable,
@@ -18,7 +19,7 @@ export class PostComponent implements OnInit {
 
   public editingMode = EditMode.notEditable;
   
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private postService: PostService) {
    }
 
   ngOnInit() {
@@ -32,7 +33,7 @@ export class PostComponent implements OnInit {
   }
 
   remove() {
-
+    this.postService.remove(this.postWithAuthor.$key);
   }
 
 }
