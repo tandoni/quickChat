@@ -10,6 +10,7 @@ import { environment } from '../environments/environment';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import {
   MdAutocompleteModule,
@@ -83,6 +84,7 @@ export const MaterialModules = [
     AngularFireDatabaseModule, // imports firebase/database, only needed for database features
     AngularFireAuthModule,
     BrowserAnimationsModule,
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
