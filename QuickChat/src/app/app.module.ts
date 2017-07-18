@@ -42,6 +42,9 @@ import { SignInComponent } from './+sign-in/sign-in.component';
 import { MyPostsComponent } from './+my-posts/my-posts.component';
 import { AuthService } from "app/services/auth.service";
 import { AuthGuard } from "app/services/auth.guard";
+import { CreatePostComponent } from './create-post/create-post.component';
+import { PostListComponent } from './post-list/post-list.component';
+import { PostComponent } from './post/post.component';
 
 
 export const MaterialModules = [
@@ -75,7 +78,10 @@ export const MaterialModules = [
     AppComponent,
     MainComponent,
     SignInComponent,
-    MyPostsComponent
+    MyPostsComponent,
+    CreatePostComponent,
+    PostListComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
