@@ -4,12 +4,14 @@ import { AngularFireDatabase, FirebaseListObservable } from "angularfire2/databa
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/Observable/combineLatest';
 import 'rxjs/add/operator/scan';
-import { AuthorService } from "app/services/author.service";
 import { Author } from "models/author";
 import { Subject } from "rxjs/Subject";
 import 'rxjs/add/operator/switchMap';
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import * as firebase from 'firebase/app';
+import { Query } from "angularfire2/interfaces";
+import { AuthService } from "app/services/auth.service";
+import { AuthorService } from "app/services/author.service";
 
 @Injectable()
 export class PostService {
@@ -18,24 +20,39 @@ export class PostService {
 
   public hideLoadMoreBtn = false;
 
-  postsWithAuthorStream: Observable<PostWithAuthor[]>
+  postsWithAuthorStream: Observable<PostWithAuthor[]>;
 
-  private postIncrementStream: Subject<number>
+  private postIncrementStream: Subject<number>;
+  private isMypostsPageStream: Subject<boolean>;
 
-  constructor(private db: AngularFireDatabase, private authorService: AuthorService) {
+  constructor(private db: AngularFireDatabase, private authService: AuthService, private authorService: AuthorService) {
     this.postIncrementStream = new BehaviorSubject<number>(this.postBatchSize);
-
+    this.isMypostsPageStream = new BehaviorSubject<boolean>(false);
     const numPostsStream = this.postIncrementStream.
       scan<number>((previousTotal: number, currentValue: number) => {
         return previousTotal + currentValue;
       });
 
-    const postsStream: Observable<Post[]> = numPostsStream.
-      switchMap<number, Post[]>((numPosts: number) => {
-        return this.db.list(this.postsPath, {
-          query: {
+    const queryStream: Observable<Query> = Observable.combineLatest<Query>(
+      numPostsStream,
+      this.isMypostsPageStream,
+      (numPosts: number, isMypostPage: boolean) => {
+        if (isMypostPage) {
+          return {
+            orderByChild: 'authorKey',
+            equalTo: this.authService.currentUsersUid,
+          };
+        } else {
+          return {
             limitToLast: numPosts,
           }
+        };
+      });
+
+    const postsStream: Observable<Post[]> = queryStream.
+      switchMap<Query, Post[]>((queryParam: Query) => {
+        return this.db.list(this.postsPath, {
+          query: queryParam,
         });
       });
 
@@ -70,5 +87,9 @@ export class PostService {
   update(key: string, post: Post) {
     // firebase.database().ref().child(this.postsPath).child(key).set(post);
     this.db.object(`/${this.postsPath}/${key}`).update(post);
+  }
+
+  showOnlyMyPosts(isMyPostsPage: boolean) {
+    this.isMypostsPageStream.next(isMyPostsPage);
   }
 }
