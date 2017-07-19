@@ -6,11 +6,11 @@
 export const environment = {
   production: false,
   firebaseConfig: {
-    apiKey: "AIzaSyBtEJk5XCXGUAKgi2iZFKoXp_o8tpvugAQ",
-    authDomain: "tandoni-quickchat.firebaseapp.com",
-    databaseURL: "https://tandoni-quickchat.firebaseio.com",
-    projectId: "tandoni-quickchat",
-    storageBucket: "tandoni-quickchat.appspot.com",
-    messagingSenderId: "189230495987"
+    apiKey: "AIzaSyCT8Hb54HQ2wHIFXr1YlAtPIZerN9UQwM4",
+    authDomain: "tandoni-quick-chat.firebaseapp.com",
+    databaseURL: "https://tandoni-quick-chat.firebaseio.com",
+    projectId: "tandoni-quick-chat",
+    storageBucket: "",
+    messagingSenderId: "978364187766"
   },
 };
