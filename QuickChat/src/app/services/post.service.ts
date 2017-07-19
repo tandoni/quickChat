@@ -23,7 +23,7 @@ export class PostService {
   postsWithAuthorStream: Observable<PostWithAuthor[]>;
 
   private postIncrementStream: Subject<number>;
-  private isMypostsPageStream: Subject<boolean>;
+  public isMypostsPageStream: Subject<boolean>;
 
   constructor(private db: AngularFireDatabase, private authService: AuthService, private authorService: AuthorService) {
     this.postIncrementStream = new BehaviorSubject<number>(this.postBatchSize);
