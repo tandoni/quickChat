@@ -4,7 +4,7 @@
     </app-post>
     <hr>
   </div>
-  <div *ngIf="!postService.hideLoadMoreBtn && (postServiceisMyPostsPageStream | async)" fxLayout="row" fxLayoutAlign="end center">
+  <div *ngIf="!postService.hideLoadMoreBtn && (postService.isMyPostsPageStream | async)" fxLayout="row" fxLayoutAlign="end center">
     <button md-raised-button color="accent" (click)="postService.displayMorePosts()">
       Load more posts</button>
   </div>
